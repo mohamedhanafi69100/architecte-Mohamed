@@ -1,7 +1,12 @@
+// 🔷 PARTIE 1 : GESTION DES PROJETS
+
+// 1️⃣ Cibler la galerie
 const gallery = document.querySelector(".gallery");
 
+// 2️⃣ Tableau pour stocker les projets
 let worksList = [];
 
+// 3️⃣ Récupérer les projets depuis l'API
 const getWorks = () => {
   fetch("http://localhost:5678/api/works")
     .then((res) => res.json())
@@ -11,7 +16,7 @@ const getWorks = () => {
     });
 };
 
-// 4️⃣ Fonction pour afficher tous les travaux dans la galerie
+// 4️⃣ Afficher tous les projets
 const generateWorksList = () => {
   gallery.innerHTML = "";
   worksList.forEach((work) => {
@@ -29,61 +34,7 @@ const generateWorksList = () => {
   });
 };
 
-// 5️⃣ Appel de la fonction pour afficher les projets au chargement
-getWorks();
-
-// 6️⃣ Déclaration du tableau vide pour les catégories
-let categoriesList = [];
-
-// 7️⃣ Fonction pour récupérer les catégories depuis l'API
-const getCategories = () => {
-  fetch("http://localhost:5678/api/categories")
-    .then((res) => res.json())
-    .then((data) => {
-      categoriesList = data;
-      generateFiltersButtons(categoriesList); // 📌 On passe à l'étape suivante : création des boutons
-    });
-};
-
-// 8️⃣ Fonction pour créer dynamiquement les boutons de filtre
-const generateFiltersButtons = (categories) => {
-  const filtersContainer = document.querySelector(".filters");
-
-  // Fonction pour gérer l'état actif des boutons
-  const setActiveButton = (clickedButton) => {
-    const allButtons = filtersContainer.querySelectorAll("button");
-    allButtons.forEach((btn) => btn.classList.remove("filter-button-active"));
-    clickedButton.classList.add("filter-button-active");
-  };
-
-  // Bouton "Tous"
-  const allButton = document.createElement("button");
-  allButton.innerText = "Tous";
-  allButton.className = "buttons filter-button filter-button-active"; // actif par défaut
-  allButton.addEventListener("click", (event) => {
-    generateWorksList(); // 📌 Affiche tous les projets
-    setActiveButton(event.target);
-  });
-  filtersContainer.appendChild(allButton);
-  console.log(allButton);
-
-  // Boutons pour chaque catégorie
-  categories.forEach((category) => {
-    const button = document.createElement("button");
-    button.innerText = category.name;
-    button.className = "buttons filter-button";
-    button.addEventListener("click", (event) => {
-      const filteredWorks = worksList.filter(
-        (work) => work.categoryId === category.id
-      );
-      generateFilteredWorksList(filteredWorks); // 📌 On filtre ici
-      setActiveButton(event.target);
-    });
-    filtersContainer.appendChild(button);
-  });
-};
-
-// 9️⃣ Fonction pour afficher les projets filtrés
+// 5️⃣ Afficher uniquement les projets filtrés
 const generateFilteredWorksList = (filteredList) => {
   gallery.innerHTML = "";
   filteredList.forEach((work) => {
@@ -101,5 +52,64 @@ const generateFilteredWorksList = (filteredList) => {
   });
 };
 
-// 🔟 Appel final de la fonction principale
-getCategories();
+// ✅ Appel final de la partie "projets"
+getWorks(); // Charger et afficher les projets
+
+// 🔷 PARTIE 2 : GESTION DES CATÉGORIES
+
+// 6️⃣ Tableau pour stocker les catégories
+let categoriesList = [];
+
+// 7️⃣ Récupérer les catégories depuis l'API
+const getCategories = () => {
+  fetch("http://localhost:5678/api/categories")
+    .then((res) => res.json())
+    .then((data) => {
+      categoriesList = data;
+      generateFiltersButtons(categoriesList);
+    });
+};
+
+// 8️⃣ Créer dynamiquement les boutons de filtre
+const generateFiltersButtons = (categories) => {
+  const filtersContainer = document.querySelector(".filters");
+
+  // 1. Créer le bouton "Tous"
+  const allButton = document.createElement("button");
+  allButton.innerText = "Tous";
+  allButton.className = "buttons filter-button filter-button-active";
+  filtersContainer.appendChild(allButton);
+
+  // 2. Créer les autres boutons
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.innerText = category.name;
+    button.className = "buttons filter-button";
+    filtersContainer.appendChild(button);
+
+    // 3. Au clic : filtrer les projets + activer le bouton
+    button.addEventListener("click", (event) => {
+      const filteredWorks = worksList.filter(
+        (work) => work.categoryId === category.id
+      );
+      generateFilteredWorksList(filteredWorks);
+      setActiveButton(event.target);
+    });
+  });
+
+  // 4. Fonction pour gérer le bouton actif
+  const setActiveButton = (clickedButton) => {
+    const allButtons = filtersContainer.querySelectorAll("button");
+    allButtons.forEach((btn) => btn.classList.remove("filter-button-active"));
+    clickedButton.classList.add("filter-button-active");
+  };
+
+  // 5. Bouton "Tous" : afficher tout
+  allButton.addEventListener("click", (event) => {
+    generateWorksList();
+    setActiveButton(event.target);
+  });
+};
+
+// ✅ Appel final de la partie "catégories"
+getCategories(); // Charger les catégories et afficher les filtres
