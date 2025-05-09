@@ -113,3 +113,68 @@ const generateFiltersButtons = (categories) => {
 
 // ✅ Appel final de la partie "catégories"
 getCategories(); // Charger les catégories et afficher les filtres
+
+/***********Logout index.html **********/
+// const token = localStorage.getItem("token"); // 🔸 Déclaration manquante
+// if (token) {
+//   const authButton = document.querySelector(".authButton");
+//   authButton.innerText = "";
+
+//   const logoutButton = document.createElement("a");
+//   logoutButton.innerText = "logout";
+//   logoutButton.href = "#"; // ✅ Ajoute cette ligne
+
+//   logoutButton.addEventListener("click", () => {
+//     localStorage.removeItem("token");
+//     window.location.href = "./index.html";
+//   });
+
+//   authButton.appendChild(logoutButton); // ✅ Une seule fois suffit
+// }
+
+// /****************topbar**************** */
+// const generateTopBar = () => {
+//   const header = document.querySelector("header");
+//   const topBar = document.createElement("div");
+//   const topBarIcon = document.createElement("img");
+//   topBarIcon.src = "./assets/icons/edit-white.svg";
+//   topBar.className = "topBar";
+
+//   topBar.appendChild(topBarIcon); // ✅ ajoute l'image à la div
+//   topBar.innerHTML += "Mode édition"; // ajoute le texte après l'icône
+//   header.prepend(topBar); // ✅ insère la top bar au début du header
+// };
+// generateTopBar();
+
+/***********Logout index.html + Top Bar***********/
+
+const token = localStorage.getItem("token");
+
+if (token) {
+  // Gérer le bouton logout
+  const authButton = document.querySelector(".authButton");
+  authButton.innerText = "";
+
+  const logoutButton = document.createElement("a");
+  logoutButton.innerText = "logout";
+  logoutButton.href = "#";
+  logoutButton.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "./index.html";
+  });
+  authButton.appendChild(logoutButton);
+
+  // Créer la topBar
+  const header = document.querySelector("header");
+  const topBar = document.createElement("div");
+  topBar.className = "topBar";
+
+  const topBarIcon = document.createElement("img");
+  topBarIcon.src = "./assets/icons/edit-white.svg";
+  topBarIcon.alt = "icone édition";
+
+  topBar.appendChild(topBarIcon);
+  topBar.innerHTML += "Mode édition";
+
+  header.prepend(topBar);
+}
