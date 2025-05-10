@@ -162,17 +162,25 @@ const generateModale = () => {
 
   const modaleContent = document.createElement("div");
   modaleContent.className = "modale-content";
+
   const h2 = document.createElement("h2");
   h2.innerText = "Galerie photo";
-  modaleContent.appendChild(h2);
+  h2.className = "modale-title";
 
+  // 🔽 Ajoute ici ton icône
+  const closeModaleIcon = document.createElement("img");
+  closeModaleIcon.src = "./assets/icons/close-icon.svg";
+
+  closeModaleIcon.className = "close-modale-icon"; // pour le style
+  closeModaleIcon.addEventListener("click", () => {
+    modaleContainer.innerHTML = ""; // supprime le contenu de la modale
+    document.body.classList.remove("no-scroll"); // réactive le scroll sur le site
+  });
+
+  modaleContent.appendChild(h2);
+  modaleContent.appendChild(closeModaleIcon);
   modale.appendChild(modaleContent);
   modaleContainer.appendChild(modale);
-
-  // 🔎 Vérifie que tout a bien été inséré
-  console.log("Modale container :", modaleContainer);
-  console.log("Modale :", modale);
-  console.log("Modale content :", modaleContent);
 };
 
 window.addEventListener("DOMContentLoaded", () => {
