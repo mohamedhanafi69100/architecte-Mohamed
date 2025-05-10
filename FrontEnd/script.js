@@ -152,8 +152,27 @@ const generateEditButton = () => {
   editButton.addEventListener("click", generateModale);
   editContainer.appendChild(editButton);
 };
+
+/******************Creation de la modal /**** */
 const generateModale = () => {
-  alert("Modale à implémenter !");
+  const modaleContainer = document.querySelector(".modale-container");
+
+  const modale = document.createElement("div");
+  modale.className = "modale";
+
+  const modaleContent = document.createElement("div");
+  modaleContent.className = "modale-content";
+  const h2 = document.createElement("h2");
+  h2.innerText = "Galerie photo";
+  modaleContent.appendChild(h2);
+
+  modale.appendChild(modaleContent);
+  modaleContainer.appendChild(modale);
+
+  // 🔎 Vérifie que tout a bien été inséré
+  console.log("Modale container :", modaleContainer);
+  console.log("Modale :", modale);
+  console.log("Modale content :", modaleContent);
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -161,3 +180,5 @@ window.addEventListener("DOMContentLoaded", () => {
     generateEditButton();
   }
 });
+
+generateModale();
