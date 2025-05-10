@@ -350,3 +350,26 @@ a:hover {
 .topBar img {
   margin-right: 10px;
 }
+
+/*************edit button**************/
+
+.edit-projects {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.edit-projects h2 {
+  margin: 0 15px 0 0 !important;
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

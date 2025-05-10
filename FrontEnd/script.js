@@ -1,6 +1,4 @@
 // 🔷 PARTIE 1 : GESTION DES PROJETS
-
-// 1️⃣ Cibler la galerie
 const gallery = document.querySelector(".gallery");
 
 // 2️⃣ Tableau pour stocker les projets
@@ -56,11 +54,8 @@ const generateFilteredWorksList = (filteredList) => {
 getWorks(); // Charger et afficher les projets
 
 // 🔷 PARTIE 2 : GESTION DES CATÉGORIES
-
-// 6️⃣ Tableau pour stocker les catégories
 let categoriesList = [];
 
-// 7️⃣ Récupérer les catégories depuis l'API
 const getCategories = () => {
   fetch("http://localhost:5678/api/categories")
     .then((res) => res.json())
@@ -70,24 +65,20 @@ const getCategories = () => {
     });
 };
 
-// 8️⃣ Créer dynamiquement les boutons de filtre
 const generateFiltersButtons = (categories) => {
   const filtersContainer = document.querySelector(".filters");
 
-  // 1. Créer le bouton "Tous"
   const allButton = document.createElement("button");
   allButton.innerText = "Tous";
   allButton.className = "buttons filter-button filter-button-active";
   filtersContainer.appendChild(allButton);
 
-  // 2. Créer les autres boutons
   categories.forEach((category) => {
     const button = document.createElement("button");
     button.innerText = category.name;
     button.className = "buttons filter-button";
     filtersContainer.appendChild(button);
 
-    // 3. Au clic : filtrer les projets + activer le bouton
     button.addEventListener("click", (event) => {
       const filteredWorks = worksList.filter(
         (work) => work.categoryId === category.id
@@ -97,51 +88,76 @@ const generateFiltersButtons = (categories) => {
     });
   });
 
-  // 4. Fonction pour gérer le bouton actif
   const setActiveButton = (clickedButton) => {
     const allButtons = filtersContainer.querySelectorAll("button");
     allButtons.forEach((btn) => btn.classList.remove("filter-button-active"));
     clickedButton.classList.add("filter-button-active");
   };
 
-  // 5. Bouton "Tous" : afficher tout
   allButton.addEventListener("click", (event) => {
     generateWorksList();
     setActiveButton(event.target);
   });
 };
 
-// ✅ Appel final de la partie "catégories"
 getCategories(); // Charger les catégories et afficher les filtres
 
-// /***********Logout index.html **********/
-const token = localStorage.getItem("token"); // 🔸 Déclaration manquante
+// 🔐 GESTION DE L'AUTHENTIFICATION
+const token = localStorage.getItem("token");
 if (token) {
   const authButton = document.querySelector(".authButton");
   authButton.innerText = "";
 
   const logoutButton = document.createElement("a");
   logoutButton.innerText = "logout";
-  logoutButton.href = "#"; // ✅ Ajoute cette ligne
+  logoutButton.href = "#";
 
   logoutButton.addEventListener("click", () => {
     localStorage.removeItem("token");
     window.location.href = "./index.html";
   });
 
-  authButton.appendChild(logoutButton); // ✅ Une seule fois suffit
+  authButton.appendChild(logoutButton);
 }
 
-/****************topbar**************** */
+// 🧰 Barre noire "Mode édition"
 const generateTopBar = () => {
   const header = document.querySelector("header");
   const topBar = document.createElement("div");
-  const topBarIcon = document.createElement("img");
-  topBarIcon.src = "./assets/icons/edit-white.svg";
   topBar.className = "topBar";
 
-  topBar.appendChild(topBarIcon); // ✅ ajoute l'image à la div
-  topBar.innerHTML += "Mode édition"; // ajoute le texte après l'icône
-  header.prepend(topBar); // ✅ insère la top bar au début du header
+  const topBarIcon = document.createElement("img");
+  topBarIcon.src = "./assets/icons/edit-white.svg";
+
+  const topBarText = document.createElement("span");
+  topBarText.innerText = "Mode édition";
+
+  topBar.appendChild(topBarIcon);
+  topBar.appendChild(topBarText);
+  header.prepend(topBar);
 };
 generateTopBar();
+
+/**** Définition de la fonction generateEditButton** */
+
+const generateEditButton = () => {
+  const editContainer = document.querySelector(".edit-projects");
+  const editButton = document.createElement("button");
+  editButton.className = "edit-button";
+  editButton.innerText = "modifier";
+  const editIconButton = document.createElement("img");
+  editIconButton.src = "./assets/icons/Group.svg";
+  editButton.prepend(editIconButton); // ← 🔧 C’est cette ligne qui manque
+
+  editButton.addEventListener("click", generateModale);
+  editContainer.appendChild(editButton);
+};
+const generateModale = () => {
+  alert("Modale à implémenter !");
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (token) {
+    generateEditButton();
+  }
+});
