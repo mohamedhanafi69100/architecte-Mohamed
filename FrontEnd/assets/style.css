@@ -377,7 +377,7 @@ a:hover {
   margin-right: 10px;
 }
 
-/****modale************/
+/**************Installation de la modale************/
 
 .modale {
   position: fixed;
@@ -421,14 +421,21 @@ a:hover {
   right: 30px;
   cursor: pointer;
 }
-/***********css miniature image ***/
+/***********css images miniature de la modale **********/
 .work-image-container {
   width: 20%;
   padding: 10px 2px;
   box-sizing: border-box;
 }
 
-.work-image-container img {
+.work-image-modale {
+  width: 100%;
+  height: 102px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.work-image-modale {
   width: 100%;
   height: 102px;
   object-fit: cover;
@@ -455,4 +462,36 @@ a:hover {
   cursor: pointer;
 }
 
-/********************/
+/**********trash-poubelle images**********/
+
+.trash-container {
+  position: absolute;
+  top: 12px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.trash-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.work-image-container {
+  position: relative;
+}
+
+/***********2eme modal******/
+
+.arrow-left {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+}

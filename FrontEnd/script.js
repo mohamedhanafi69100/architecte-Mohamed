@@ -1,10 +1,8 @@
 // 🔷 PARTIE 1 : GESTION DES PROJETS
 const gallery = document.querySelector(".gallery");
 
-// 2️⃣ Tableau pour stocker les projets
 let worksList = [];
 
-// 3️⃣ Récupérer les projets depuis l'API
 const getWorks = () => {
   fetch("http://localhost:5678/api/works")
     .then((res) => res.json())
@@ -14,7 +12,6 @@ const getWorks = () => {
     });
 };
 
-// 4️⃣ Afficher tous les projets
 const generateWorksList = () => {
   gallery.innerHTML = "";
   worksList.forEach((work) => {
@@ -32,7 +29,6 @@ const generateWorksList = () => {
   });
 };
 
-// 5️⃣ Afficher uniquement les projets filtrés
 const generateFilteredWorksList = (filteredList) => {
   gallery.innerHTML = "";
   filteredList.forEach((work) => {
@@ -50,10 +46,8 @@ const generateFilteredWorksList = (filteredList) => {
   });
 };
 
-// ✅ Appel final de la partie "projets"
-getWorks(); // Charger et afficher les projets
+getWorks();
 
-// 🔷 PARTIE 2 : GESTION DES CATÉGORIES
 let categoriesList = [];
 
 const getCategories = () => {
@@ -100,9 +94,8 @@ const generateFiltersButtons = (categories) => {
   });
 };
 
-getCategories(); // Charger les catégories et afficher les filtres
+getCategories();
 
-// 🔐 GESTION DE L'AUTHENTIFICATION
 const token = localStorage.getItem("token");
 
 if (token) {
@@ -121,7 +114,6 @@ if (token) {
   authButton.appendChild(logoutButton);
 }
 
-// 🧰 Barre noire "Mode édition"
 const generateTopBar = () => {
   const header = document.querySelector("header");
   const topBar = document.createElement("div");
@@ -138,7 +130,6 @@ const generateTopBar = () => {
   header.prepend(topBar);
 };
 
-/**** Définition de la fonction generateEditButton** */
 const generateEditButton = () => {
   const editContainer = document.querySelector(".edit-projects");
   const editButton = document.createElement("button");
@@ -153,35 +144,26 @@ const generateEditButton = () => {
 };
 
 const generateModale = () => {
-  // 1️⃣ Sélectionne le conteneur vide prévu dans le HTML pour afficher la modale
   const modaleContainer = document.querySelector(".modale-container");
+  modaleContainer.innerHTML = "";
 
-  // 2️⃣ Crée le fond noir semi-transparent (overlay)
   const modale = document.createElement("div");
   modale.className = "modale";
 
-  // 3️⃣ Crée le bloc blanc central (contenu de la modale)
   const modaleContent = document.createElement("div");
   modaleContent.className = "modale-content";
 
-  // 4️⃣ Crée le titre de la modale
   const h2 = document.createElement("h2");
   h2.innerText = "Galerie photo";
   h2.className = "modale-title";
 
-  // 5️⃣ Crée le bouton pour fermer la modale (la croix X)
   const closeModaleIcon = document.createElement("img");
   closeModaleIcon.src = "./assets/icons/close-icon.svg";
   closeModaleIcon.className = "close-modale-icon";
 
-  // 6️⃣ Crée le conteneur qui affichera toutes les miniatures
   const modaleWorksContainer = document.createElement("div");
   modaleWorksContainer.className = "modale-works-container";
 
-  // 🧱 Injecte le conteneur de miniatures dans le contenu de la modale
-  modaleContent.appendChild(modaleWorksContainer);
-
-  // 7️⃣ Boucle sur chaque projet pour créer sa miniature
   worksList.forEach((work) => {
     const workDiv = document.createElement("div");
     workDiv.className = "work-image-container";
@@ -189,37 +171,92 @@ const generateModale = () => {
     const workImage = document.createElement("img");
     workImage.src = work.imageUrl;
     workImage.alt = work.title;
+    workImage.className = "work-image-modale";
 
+    const trashDiv = document.createElement("div");
+    trashDiv.className = "trash-container";
+
+    const trash = document.createElement("img");
+    trash.src = "./assets/icons/trash-can-solid.svg";
+    trash.className = "trash-icon";
+    trash.id = work.id;
+
+    trash.addEventListener("click", () => {
+      deleteWork(trash.id);
+    });
+
+    trashDiv.appendChild(trash);
     workDiv.appendChild(workImage);
+    workDiv.appendChild(trashDiv);
     modaleWorksContainer.appendChild(workDiv);
   });
 
-  // 8️⃣ Crée le bouton vert "Ajouter une photo"
   const addPictureButton = document.createElement("button");
   addPictureButton.innerText = "Ajouter une photo";
   addPictureButton.className = "modale-green-button";
+  addPictureButton.addEventListener("click", generateSecondContentModale);
 
-  // 9️⃣ Ajoute l’événement clic sur l’icône de fermeture
   closeModaleIcon.addEventListener("click", () => {
-    modaleContainer.innerHTML = ""; // vide le contenu
-    document.body.classList.remove("no-scroll"); // réactive le scroll
+    modaleContainer.innerHTML = "";
+    document.body.classList.remove("no-scroll");
   });
 
-  // ✅ Injecte les éléments dans le bon ordre
-  modaleContent.appendChild(h2); // 1️⃣ Titre
-  modaleContent.appendChild(closeModaleIcon); // 2️⃣ Croix de fermeture
-  modaleContent.appendChild(modaleWorksContainer); // 3️⃣ Miniatures
-  modaleContent.appendChild(addPictureButton); // 4️⃣ Bouton vert
+  modaleContent.appendChild(h2);
+  modaleContent.appendChild(closeModaleIcon);
+  modaleContent.appendChild(modaleWorksContainer);
+  modaleContent.appendChild(addPictureButton);
 
-  modale.appendChild(modaleContent); // Ajoute à la modale
-  modaleContainer.appendChild(modale); // Ajoute à la page
+  modale.appendChild(modaleContent);
+  modaleContainer.appendChild(modale);
 
-  // 1️⃣1️⃣ Désactive le scroll en arrière-plan
   document.body.classList.add("no-scroll");
 };
 
-// ✅✅✅ ✅ AJOUTER CETTE CONDITION TOUT EN BAS :
+const generateSecondContentModale = () => {
+  const modaleContent = document.querySelector(".modale-content");
+  modaleContent.innerText = "";
+
+  const arrowLeft = document.createElement("img");
+  arrowLeft.src = "./assets/icons/arrow-left.svg";
+  arrowLeft.className = "arrow-left";
+  arrowLeft.addEventListener("click", generateModale);
+
+  const h2 = document.createElement("h2");
+  h2.innerText = "Ajout photo";
+  h2.className = "modale-title";
+
+  modaleContent.appendChild(arrowLeft);
+  modaleContent.appendChild(h2);
+
+  const closeModaleIcon = document.createElement("img");
+  closeModaleIcon.src = "./assets/icons/close-icon.svg";
+  closeModaleIcon.className = "close-modale-icon";
+  closeModaleIcon.addEventListener("click", () => {
+    document.querySelector(".modale-container").innerHTML = "";
+    document.body.classList.remove("no-scroll");
+  });
+
+  modaleContent.appendChild(closeModaleIcon);
+};
+
+const deleteWork = (id) => {
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    if (res.ok) {
+      worksList = worksList.filter((work) => work.id !== parseInt(id));
+      generateModale();
+      generateWorksList();
+    } else {
+      alert("Erreur lors de la suppression");
+    }
+  });
+};
+
 if (token) {
-  generateTopBar(); // Affiche la barre noire si connecté
-  generateEditButton(); // Affiche le bouton “modifier” si connecté
+  generateTopBar();
+  generateEditButton();
 }
