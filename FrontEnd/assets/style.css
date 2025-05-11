@@ -421,3 +421,36 @@ a:hover {
   right: 30px;
   cursor: pointer;
 }
+/***********css miniature image ***/
+.work-image-container {
+  width: 20%;
+  padding: 10px 2px;
+  box-sizing: border-box;
+}
+
+.work-image-container img {
+  width: 100%;
+  height: 102px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.modale-works-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start; /* ou center selon l'effet voulu */
+}
+
+/**********button vert ajouter photo*******/
+
+.modale-green-button {
+  margin-top: 38px;
+  height: 36px;
+  width: 60%;
+  font-family: "Syne";
+  background-color: #1d6154;
+  color: white;
+  border-radius: 60px;
+  border: #1d6154;
+  cursor: pointer;
+}
