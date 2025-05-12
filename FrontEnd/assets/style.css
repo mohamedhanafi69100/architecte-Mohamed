@@ -495,3 +495,193 @@ a:hover {
   left: 30px;
   cursor: pointer;
 }
+
+/**************formulaire************/
+
+/************code modale ***/
+.modale {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+}
+
+.modale-content {
+  background-color: white;
+  min-height: 500px;
+  width: 630px;
+  border-radius: 15px;
+  padding: 50px 100px 45px 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.modale-title {
+  font-family: "Work Sans";
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 30.5px;
+  text-align: center;
+  color: black;
+  margin-bottom: 45px;
+}
+
+.close-modale-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.work-image-container {
+  position: relative;
+  width: 20%;
+  padding: 10px 2px;
+  box-sizing: border-box;
+}
+
+.work-image-modale {
+  height: 102px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.trash-container {
+  background-color: black;
+  position: absolute;
+  top: 15px;
+  right: 5px;
+  height: 17px;
+  width: 17px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modale-works-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/**************les 2 button vertet gris *************/
+.modale-green-button {
+  margin-top: 38px;
+  height: 36px;
+  width: 60%;
+  font-family: "Syne";
+  background-color: #1d6154;
+  color: white;
+  border-radius: 60px;
+  border: #1d6154;
+  cursor: pointer;
+}
+
+.modale-grey-button {
+  font-family: "Syne";
+  background-color: #a7a7a7;
+  border: #a7a7a7;
+  color: white;
+  height: 36px;
+  border-radius: 60px;
+  width: 50%;
+  cursor: pointer;
+}
+
+/**********arrow left *******************/
+.arrow-left {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+}
+
+/**********css form***************/
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.add-photo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-photo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/**************4 mo max **********/
+.image-preview {
+  background-color: #e8f1f6;
+  height: 169px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+.modale-grey-button {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.add-photo-form input[type="text"] {
+  margin: 10px 0 20px 0;
+  width: 420px;
+  height: 51px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  border: none;
+}
+
+.add-photo-form select {
+  margin: 10px 0 20px 0;
+  border: none;
+  width: 420px;
+  height: 51px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  text-align: left;
+}
+
+.background-green {
+  background-color: #1d6154;
+}
+
+.add-photo-div {
+  background-color: #e8f1f6;
+  height: 169px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+/* ✅ Pour redimensionner correctement l'image dans l'aperçu */
+
+.image-preview img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
