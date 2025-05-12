@@ -217,8 +217,6 @@ const generateModale = () => {
   document.body.classList.add("no-scroll");
 };
 
-/**********ici dans cette endroit ***************/
-
 // 🎯 GÉNÉRER LA DEUXIÈME MODALE (ajout photo)
 const generateSecondContentModale = () => {
   const modaleContent = document.querySelector(".modale-content");
@@ -249,31 +247,6 @@ const generateSecondContentModale = () => {
   form.className = "add-photo-form";
   modaleContent.appendChild(form);
 
-  const imageLabel = document.createElement("label");
-  imageLabel.innerText = "Image";
-  imageLabel.htmlFor = "image";
-
-  const imageInput = document.createElement("input");
-  imageInput.type = "file";
-  imageInput.id = "image";
-  imageInput.name = "image";
-  imageInput.accept = "image/*";
-
-  const titleInput = document.createElement("input");
-  titleInput.type = "text";
-  titleInput.name = "title";
-  titleInput.placeholder = "Titre";
-
-  const categorySelect = document.createElement("select");
-  categorySelect.name = "category";
-
-  categoriesList.forEach((category) => {
-    const option = document.createElement("option");
-    option.value = category.id;
-    option.innerText = category.name;
-    categorySelect.appendChild(option);
-  });
-
   const previewContainer = document.createElement("div");
   previewContainer.className = "image-preview";
   previewContainer.innerHTML = `
@@ -282,10 +255,43 @@ const generateSecondContentModale = () => {
     <p class="file-info">jpg, png : 4mo max</p>
   `;
 
+  const imageInput = document.createElement("input");
+  imageInput.type = "file";
+  imageInput.id = "image";
+  imageInput.name = "image";
+  imageInput.accept = "image/*";
+  imageInput.style.display = "none";
+
+  const titleLabel = document.createElement("label");
+  titleLabel.innerText = "Titre";
+  titleLabel.setAttribute("for", "title");
+
+  const titleInput = document.createElement("input");
+  titleInput.type = "text";
+  titleInput.name = "title";
+  titleInput.id = "title";
+  titleInput.placeholder = "Titre";
+
+  const categoryLabel = document.createElement("label");
+  categoryLabel.innerText = "Catégorie";
+  categoryLabel.setAttribute("for", "category");
+
+  const categorySelect = document.createElement("select");
+  categorySelect.name = "category";
+  categorySelect.id = "category";
+
+  categoriesList.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.innerText = category.name;
+    categorySelect.appendChild(option);
+  });
+
   form.appendChild(previewContainer);
-  form.appendChild(imageLabel);
   form.appendChild(imageInput);
+  form.appendChild(titleLabel);
   form.appendChild(titleInput);
+  form.appendChild(categoryLabel);
   form.appendChild(categorySelect);
 
   const submitButton = document.createElement("button");
@@ -294,12 +300,10 @@ const generateSecondContentModale = () => {
   submitButton.className = "modale-grey-button";
   form.appendChild(submitButton);
 
-  imageInput.style.display = "none";
   previewContainer.addEventListener("click", () => {
     imageInput.click();
   });
 
-  // ✅ Active dynamiquement le bouton "Valider" si image + titre présents
   submitButton.disabled = true;
 
   const checkFormCompletion = () => {
@@ -319,7 +323,6 @@ const generateSecondContentModale = () => {
   imageInput.addEventListener("change", checkFormCompletion);
   titleInput.addEventListener("input", checkFormCompletion);
 
-  // 📸 Affiche l’image sélectionnée dans la zone de prévisualisation
   imageInput.addEventListener("change", () => {
     const file = imageInput.files[0];
     if (file) {
@@ -331,7 +334,6 @@ const generateSecondContentModale = () => {
     }
   });
 
-  // 📨 Soumission du formulaire pour ajouter un projet via l’API
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -364,7 +366,6 @@ const generateSecondContentModale = () => {
   });
 };
 
-// ❌ SUPPRIMER UN PROJET
 const deleteWork = (id) => {
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",

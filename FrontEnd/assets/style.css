@@ -685,3 +685,24 @@ a:hover {
   max-width: 100%;
   object-fit: contain;
 }
+
+/*********************************/
+.add-photo-form label {
+  font-family: "Work Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.42px;
+  text-align: left;
+  margin: 10px 0 5px 0;
+  display: block;
+}
+
+.add-photo-form label {
+  font-family: Work Sans;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.42px;
+  justify-content: baseline;
+  align-self: flex-start;
+  margin-bottom: 5px;
+}
